@@ -1,0 +1,46 @@
+
+```
+---
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: rss-site
+   labels:
+     app: web
+ spec:
+   containers:
+     - name: front-end
+       image: nginx
+       ports:
+         - containerPort: 80
+     - name: rss-reader
+       image: nickchase/rss-php-nginx:v1
+       ports:
+         - containerPort: 88
+```
+
+```
+---
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ metadata:
+   name: rss-site
+ spec:
+   replicas: 2
+   template:
+     metadata:
+       labels:
+         app: web
+     spec:
+       containers:
+         - name: front-end
+           image: nginx
+           ports:
+             - containerPort: 80
+         - name: rss-reader
+           image: nickchase/rss-php-nginx:v1
+           ports:
+             - containerPort: 88
+```
+
+
